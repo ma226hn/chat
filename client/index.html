@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='style.css' type='text/css'/>
+    <script src="/socket.io/socket.io.js"></script>
+    <script  type="module" src="index.js"></script>
+    <title>Chat Application</title>
+</head>
+<body>
+    <button id="startGame"> start game</button>
+  <button id="JoinGame"> join game</button>
+  <input type="text" id="roomName"></input>
+
+  
+    <ul id="messages"></ul>
+    <span id="notifyUser"></span>
+    <form id="form" action="" > 
+      <input type="hidden" id="user" value="" />
+      <input id="m" autocomplete="off" " placeholder="Type yor message here.." /><input type="submit" id="button" value="Send"/> 
+    </form>
+    
+</body>
+</html>
