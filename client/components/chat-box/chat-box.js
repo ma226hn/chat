@@ -1,5 +1,5 @@
 
-import { get } from 'node-emoji'
+
 /**
  * The component for massenger.
  *
@@ -24,12 +24,7 @@ form #button {
 #messages {
      list-style-type: none; margin: 0; padding: 0;
      }
-#messages li {
-     padding: 5px 10px; 
-    }
-#messages li:nth-child(odd) {
-     background: #eee; 
-    }
+
 #notifyUser {
      position: fixed; bottom: 42px; width: 100%;
      }
@@ -54,11 +49,8 @@ customElements.define('chat-box',
    */
   class extends HTMLElement {
 #roomName
-#end
-#log
-#username
 #socket
-#timer
+
 
 /**
  * Constructor for class .
@@ -93,17 +85,18 @@ async connectedCallback () {
 
 
 async contact (action) {
-  this.#socket = io("ws://localhost:3000");
-  let user = localStorage.getItem('user')
-  socket.emit(`${actionName}`,`${this.#roomName}`,user);
+   var socket = io("ws://localhost:3000");
+  let user =JSON.parse (localStorage.getItem('user'))
+  console.log(action)
+  socket.emit(`${action}`,`${this.#roomName}`,user);
   socket.on('create', (room,user )=> {
-console.log(room)
+console.log(room,'ölölöl')
 this.#roomName =room
-localStorage.setItem('user',user)
+localStorage.setItem('user', JSON.stringify(user))
 
    });
-socket.on('join', function(user ){
-    localStorage.setItem('user',user)
+socket.on('join', (user )=>{
+    localStorage.setItem('user',JSON.stringify(user))
     })
 
  var messageInput = this.shadowRoot.querySelector('#messageInput')
@@ -111,23 +104,28 @@ socket.on('join', function(user ){
    this.shadowRoot.querySelector('#form').addEventListener('submit', (e)=>
   {
     e.preventDefault ()
-     var user = localStorage.getItem('user')
+     var user = JSON.parse (localStorage.getItem('user'))
     var message = messageInput.value 
-    socket.emit('chatMessage', user, message,this.#roomNme);
+    socket.emit('chatMessage', user, message,this.#roomName);
    
     messageInput.value=''
   })
-  socket.on('chatMessage', function(from, msg){
-    //   var me = $('#user').val();
-      var color =  '#009afd';
-    //   var from = (from == me) ? 'Me' : from;
+  socket.on('chatMessage', (from, msg) => {
+   
     console.log(from,msg)
     var messageLine = document.createElement('li')
+    const messageDiv = document.createElement('message-line')
+    messageDiv.setAttribute('userName',from.name)
+    messageDiv.setAttribute('userColor',from.color)
+    messageDiv.setAttribute('userImg',from.profileImg)
+
+    messageDiv.setAttribute('message',msg)
+    messageLine.appendChild(messageDiv)
+
+  
     
-    messageLine.textContent = msg
     
-    
-    document.querySelector('#messages').append(messageLine);
+    this.shadowRoot.querySelector('#messages').append(messageLine);
      });
      
     
@@ -136,53 +134,39 @@ socket.on('join', function(user ){
 
 
  messageInput.focus();
-// //   return false;
+
 
 messageInput.addEventListener('keyup', ()=>
 
 {
-    var user = localStorage.getItem('user')
-console.log(user)
-socket.emit('notifyUser', user,this.#roomName);}
+    var user =JSON.parse (localStorage.getItem('user'))
+
+socket.emit('notifyUser', user,this.#roomName)
+}
 )      
 
 
 
-// socket.on('notifyUser', function (user){
-// //   var me = $('#user').val();
-//  //  if(user != 'me') {
+socket.on('notifyUser',  (sendingUser)=> {
+   let thisUser =JSON.parse (localStorage.getItem('user'))
+  if(thisUser.id != sendingUser.id) {
   
-// document.querySelector('#notifyUser').textContent = `${user} is typing ...`
+this.shadowRoot.querySelector('#notifyUser').textContent = `${sendingUser.name} is typing ...`
 
-// // }
-// setTimeout(()=>
-// {
-//     document.querySelector('#notifyUser').textContent = ''
-// } ,1000)
+}
+setTimeout(()=>
+{
+    this.shadowRoot.querySelector('#notifyUser').textContent = ''
+} ,1000)
 
-//  });
-
-
-//  socket.on('create', function (room){
-
-
-
-// console.log(room,'room in server')
-
-
-
-
-
-//  })
-
-
-
+ });
 
 
 
   
+
 }
-}
+  }
 
 
 )

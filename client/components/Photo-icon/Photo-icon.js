@@ -35,7 +35,7 @@ border-radius: 50% 10%;
 
 </style>
 <div id= 'photo-icon'>
-
+<img />
 <p class='name-p'> </p>
 
 
@@ -56,11 +56,11 @@ border-radius: 50% 10%;
   }
 
   connectedCallback() { 
-
+console.log(this.getAttribute('srcImg'))
    console.log(this.shadowRoot.querySelectorAll('p'))
    this.shadowRoot.querySelector('p').textContent =  this.getAttribute('name') 
-   this.shadowRoot.querySelector('div').style.backgroundImage = this.getAttribute('srcImg')
-  
+   this.shadowRoot.querySelector('div').style.backgroundImage = `url(${this.getAttribute('srcImg')}) `
+   
 
   }
 

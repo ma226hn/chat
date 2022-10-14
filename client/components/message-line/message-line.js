@@ -5,40 +5,26 @@ template.innerHTML =
 
 <style>
 
-.name-p {
-  margin: 0%;
-  
-  margin-top :80%;
- 
-  text-align: center;
-width: 50%;
-height:15px;
-border-radius: 50% 10%;
-  background-color: rgb(247, 250, 252);
-  border-width: 3px;
- 
-}
-#photo-icon {
-  width:70px;
-  height:70px;
-  
- padding-left:2%;
+p#h {
+    color: red;
+    font-size: larger;
+    
 
-  border-radius: 50% ;
-  border-style: groove;
-  border-width: 3px;
-  border-color: blue;
-    background-repeat:no-repeat;
-    background-size: 100% 100%;
+}
+#messageLine {
+  display: flex;
+  flex-direction: row;
+
 }
 
 </style>
-<div id= 'message-line'>
-
+<div id= 'messageLine'>
+<div>
 <photo-icon/>
-<p></p>
-
-
+</div>
+<div>
+<p id="h"></p>
+</div>
 
 </div>
 `
@@ -49,7 +35,7 @@ border-radius: 50% 10%;
     super()
     this.attachShadow({ mode: 'open' })
     .appendChild(template.content.cloneNode(true))
-    console.log( this.shadowRoot.querySelectorAll('p'))
+    
    
    
      
@@ -57,20 +43,25 @@ border-radius: 50% 10%;
 
   connectedCallback() { 
 
-   console.log(this.shadowRoot.querySelectorAll('p'))
-   this.shadowRoot.querySelector('p').textContent =  this.getAttribute('name') 
-   this.shadowRoot.querySelector('div').style.backgroundImage = this.getAttribute('srcImg')
+    
+  console.log(this.getAttribute('message'),'mmmm')
+ 
+   this.shadowRoot.querySelector('p').textContent =  this.getAttribute('message') 
+   console.log(this.shadowRoot.querySelector('p').textContent,'ääääääääääääääääääää')
+   this.shadowRoot.querySelector('photo-icon').setAttribute('srcImg',this.getAttribute('userImg'))
+   this.shadowRoot.querySelector('photo-icon').setAttribute('name',this.getAttribute('userName'))
+   this.shadowRoot.querySelector('#messageLine').style.backgroundColor= this.getAttribute('userColor')
   
 
   }
 
   static get observedAttributes() { 
-    return ['pColor','srcImg','name'];
+    return ['message','user'];
   }
 
-  attributeChangedCallback(pColor,srcImg) { 
+  attributeChangedCallback(message,user) { 
    
   }
 
 }
- customElements.define("photo-icon", PhotoIcon);
+ customElements.define("message-line", PhotoIcon);

@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url'
  const app = express()
  const httpServer = createServer(app)
  const io = new Server(httpServer)
- const rooms={}
+ const rooms= []
  const colors =[]
 function generateUniqueColor()
 { let color
@@ -22,12 +22,14 @@ function generateUniqueColor()
     
     
     socket.on('create', (room,user) => {
-     let finalRoomName= room+ rooms.length
+      console.log(user.name)
+    let finalRoomName= room+ rooms.length
       socket.join(finalRoomName); 
-      user.Id=socket.id
+      user.Id = socket.id
       user.color= 'rgb(236, 226, 226)'
       colors.push('rgb(236, 226, 226)') 
       rooms.push(finalRoomName)
+      console.log(finalRoomName)
 
       io.to(socket.io).emit('create',finalRoomName,user);
     });
@@ -38,6 +40,7 @@ function generateUniqueColor()
         user.color = color
         colors.push(color)
         io.to(socket.io).emit('join',user);
+        console.log('join')
       });
    
     console.log(socket.rooms);
