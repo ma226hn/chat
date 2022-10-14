@@ -13,29 +13,44 @@ template.innerHTML =
 <style>
 
 form {
-     background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%;
+     background: #000;
+      padding: 3px;
+       position: fixed;
+        bottom: 0;
+         width: 100%;
      }
 form input {
-     border: 0; padding: 10px; width: 90%; margin-right: .5%;
+     border: 0;
+      padding: 10px;
+       width: 90%;
+        margin-right: .5%;
      }
 form #button {
-     color:#FFF; background: #2D9F0B; border: none; padding: 10px;  width: 9%; 
+     color:#FFF;
+      background: #2D9F0B;
+       border: none; 
+       padding: 10px;
+         width: 9%; 
     }
 #messages {
-     list-style-type: none; margin: 0; padding: 0;
+     list-style-type: none;
+      margin: 0; 
+      padding: 0;
      }
 
 #notifyUser {
-     position: fixed; bottom: 42px; width: 100%;
+  
+     color:red;
      }
 
 </style>
 
 <div id="chatDiv">
     <ul id="messages"></ul>
-    <span id="notifyUser"></span>
+   
     <form id="form" action="" > 
-      <input type="hidden" id="user" value="" />
+    <p id="notifyUser"></p>
+    
       <input id="messageInput" autocomplete="off" " placeholder="Type yor message here.." /><input type="submit" id="button" value="Send"/> 
     </form>
   </div>
@@ -86,17 +101,19 @@ async connectedCallback () {
 
 async contact (action) {
    var socket = io("ws://localhost:3000");
-  let user =JSON.parse (localStorage.getItem('user'))
+  let user =JSON.parse (sessionStorage.getItem('user'))
   console.log(action)
   socket.emit(`${action}`,`${this.#roomName}`,user);
   socket.on('create', (room,user )=> {
 console.log(room,'ölölöl')
 this.#roomName =room
-localStorage.setItem('user', JSON.stringify(user))
+sessionStorage.setItem('user', JSON.stringify(user))
 
    });
 socket.on('join', (user )=>{
-    localStorage.setItem('user',JSON.stringify(user))
+  
+
+  sessionStorage.setItem('user',JSON.stringify(user))
     })
 
  var messageInput = this.shadowRoot.querySelector('#messageInput')
@@ -104,7 +121,7 @@ socket.on('join', (user )=>{
    this.shadowRoot.querySelector('#form').addEventListener('submit', (e)=>
   {
     e.preventDefault ()
-     var user = JSON.parse (localStorage.getItem('user'))
+     var user = JSON.parse (sessionStorage.getItem('user'))
     var message = messageInput.value 
     socket.emit('chatMessage', user, message,this.#roomName);
    
@@ -136,10 +153,11 @@ socket.on('join', (user )=>{
  messageInput.focus();
 
 
-messageInput.addEventListener('keyup', ()=>
+messageInput.addEventListener('keydown', ()=>
 
 {
-    var user =JSON.parse (localStorage.getItem('user'))
+  console.log('key')
+    let user =JSON.parse (sessionStorage.getItem('user'))
 
 socket.emit('notifyUser', user,this.#roomName)
 }
@@ -148,10 +166,12 @@ socket.emit('notifyUser', user,this.#roomName)
 
 
 socket.on('notifyUser',  (sendingUser)=> {
-   let thisUser =JSON.parse (localStorage.getItem('user'))
+   let thisUser =JSON.parse (sessionStorage.getItem('user'))
+   console.log(sendingUser.name)
   if(thisUser.id != sendingUser.id) {
   
 this.shadowRoot.querySelector('#notifyUser').textContent = `${sendingUser.name} is typing ...`
+console.log(this.shadowRoot.querySelector('#notifyUser').textContent)
 
 }
 setTimeout(()=>

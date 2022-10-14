@@ -53,7 +53,7 @@ function showChatBox(actionName)
      
    }
    document.querySelector('#homePageDive').style. display ='none'
-   localStorage.setItem('user',JSON.stringify (user))
+   sessionStorage.setItem('user',JSON.stringify (user))
    const chat = document.createElement('chat-box')
    chat.setAttribute('action', actionName)
    chat.setAttribute('roomName',roomName)

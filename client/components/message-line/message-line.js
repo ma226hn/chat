@@ -8,12 +8,13 @@ template.innerHTML =
 p#h {
     color: red;
     font-size: larger;
-    
+
 
 }
 #messageLine {
   display: flex;
   flex-direction: row;
+  gap: 60px;
 
 }
 
@@ -44,14 +45,14 @@ p#h {
   connectedCallback() { 
 
     
-  console.log(this.getAttribute('message'),'mmmm')
+
  
    this.shadowRoot.querySelector('p').textContent =  this.getAttribute('message') 
-   console.log(this.shadowRoot.querySelector('p').textContent,'ääääääääääääääääääää')
+ 
    this.shadowRoot.querySelector('photo-icon').setAttribute('srcImg',this.getAttribute('userImg'))
    this.shadowRoot.querySelector('photo-icon').setAttribute('name',this.getAttribute('userName'))
    this.shadowRoot.querySelector('#messageLine').style.backgroundColor= this.getAttribute('userColor')
-  
+  console.log(this.getAttribute('userColor'))
 
   }
 

@@ -10,9 +10,11 @@ import { fileURLToPath } from 'url'
  const colors =[]
 function generateUniqueColor()
 { let color
+  
   do {
   color =` rgb(${Math.random()* 250},${Math.random()* 250}, ${Math.random()* 250}) `
   } while (colors.indexOf(color)!== -1)
+
   return color
 }
 
@@ -31,16 +33,18 @@ function generateUniqueColor()
       rooms.push(finalRoomName)
       console.log(finalRoomName)
 
-      io.to(socket.io).emit('create',finalRoomName,user);
+      io.to(socket.id).emit('create',finalRoomName,user);
     });
-    socket.on('join', (room,user) => {
+    socket.on('join',(room,user) => {
         socket.join(room);
         user.id=socket.id
-        let color = generateUniqueColor()
+        let color =  generateUniqueColor()
         user.color = color
         colors.push(color)
-        io.to(socket.io).emit('join',user);
-        console.log('join')
+        
+       
+        io.to(socket.id).emit('join',user);
+     
       });
    
     console.log(socket.rooms);
@@ -48,7 +52,7 @@ function generateUniqueColor()
       io.to(room).emit('chatMessage', from, msg);
     });
     socket.on('notifyUser', function(user,room){
-     
+     console.log('not')
       io.to(room).emit('notifyUser', user);
      
     });
