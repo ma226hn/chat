@@ -10,17 +10,40 @@
     <title>Chat Application</title>
 </head>
 <body>
-    <button id="startGame"> start game</button>
-  <button id="JoinGame"> join game</button>
-  <input type="text" id="roomName"></input>
+  <div id="homePageDive">
+    <p> Are you ready for join  in one of our chat rooms</p>
+    <br>
+    <div id="nameAndImagDiv">
+      <div>
+    
+    <label> enter your name </label>
+    <input id="nameInput" type="text" >
+    <br>
+    <br>
+    <label> load your image </label>
+    <input id="imgInput" type="file"  accept="image/*"   />
+  </div>
+  <div>
+    
+    <img id="profileImg" src="./img/profileImg.jpg" />
+  </div>
+    <br>
+
+  </div>
+  <div>
+    <br>
+    <label> Insert the name of the room  </label>
+    <input type="text" id="roomName"></input>
+    <br>
+  </div>
+    <div>
+    <button id="startChat"> start game</button>
+    <button id="JoinChat"> join game</button>
+  </div>
+   </div>
+   
+    
 
   
-    <ul id="messages"></ul>
-    <span id="notifyUser"></span>
-    <form id="form" action="" > 
-      <input type="hidden" id="user" value="" />
-      <input id="m" autocomplete="off" " placeholder="Type yor message here.." /><input type="submit" id="button" value="Send"/> 
-    </form>
-    
 </body>
 </html>

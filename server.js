@@ -6,22 +6,38 @@ import { fileURLToPath } from 'url'
  const app = express()
  const httpServer = createServer(app)
  const io = new Server(httpServer)
+ const rooms={}
+ const colors =[]
+function generateUniqueColor()
+{ let color
+  do {
+  color =` rgb(${Math.random()* 250},${Math.random()* 250}, ${Math.random()* 250}) `
+  } while (colors.indexOf(color)!== -1)
+  return color
+}
+
  io.on('connection', (socket) => {
    
     io.to(socket.id).emit('Id',socket.id);
     
     
     socket.on('create', (room,user) => {
-      socket.join(room);
-     
-      console.log(room,'öööööö')
-      io.to(socket.io).emit('create',room,user);
+     let finalRoomName= room+ rooms.length
+      socket.join(finalRoomName); 
+      user.Id=socket.id
+      user.color= 'rgb(236, 226, 226)'
+      colors.push('rgb(236, 226, 226)') 
+      rooms.push(finalRoomName)
+
+      io.to(socket.io).emit('create',finalRoomName,user);
     });
     socket.on('join', (room,user) => {
         socket.join(room);
-       
-        console.log(room,'öööööö')
-        io.to(room).emit('join',room,user);
+        user.id=socket.id
+        let color = generateUniqueColor()
+        user.color = color
+        colors.push(color)
+        io.to(socket.io).emit('join',user);
       });
    
     console.log(socket.rooms);

@@ -56,11 +56,7 @@ border-radius: 50% 10%;
   }
 
   connectedCallback() { 
-   setInterval(() => {
-  
-   this.shadowRoot.querySelector('p').style.color =` rgb(${Math.random()* 250},${Math.random()* 250}, ${Math.random()* 250}) `
-    
-   }, 1000);
+
    console.log(this.shadowRoot.querySelectorAll('p'))
    this.shadowRoot.querySelector('p').textContent =  this.getAttribute('name') 
    this.shadowRoot.querySelector('div').style.backgroundImage = this.getAttribute('srcImg')
