@@ -24,7 +24,7 @@ border-radius: 50% 10%;
   height:70px;
   
  padding-left:2%;
-
+ background-image: url(${(new URL(`./image/profileImg.jpg`, import.meta.url)).href} ); 
   border-radius: 50% ;
   border-style: groove;
   border-width: 3px;
@@ -35,7 +35,8 @@ border-radius: 50% 10%;
 
 </style>
 <div id= 'photo-icon'>
-<img />
+
+
 <p class='name-p'> </p>
 
 
@@ -59,8 +60,12 @@ border-radius: 50% 10%;
 console.log(this.getAttribute('srcImg'))
    console.log(this.shadowRoot.querySelectorAll('p'))
    this.shadowRoot.querySelector('p').textContent =  this.getAttribute('name') 
-   this.shadowRoot.querySelector('div').style.backgroundImage = `url(${this.getAttribute('srcImg')}) `
+   if (this.getAttribute('srcImg') !== '')
    
+   {
+    console.log('öö')
+    this.shadowRoot.querySelector('div').style.backgroundImage = `url(${this.getAttribute('srcImg')}) `
+   }
 
   }
 

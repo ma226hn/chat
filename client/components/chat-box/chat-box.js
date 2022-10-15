@@ -1,12 +1,4 @@
 
-
-/**
- * The component for massenger.
- *
- * @author // Manar Alibrahim <ma226hn@student.lnu.se>
- *
- */
-
 const template = document.createElement('template')
 template.innerHTML =
 `
@@ -36,16 +28,36 @@ form #button {
      list-style-type: none;
       margin: 0; 
       padding: 0;
+      margin-bottom : 200px;
      }
 
 #notifyUser {
   
      color:red;
      }
+     li {
+   
+      margin-bottom: 5%;
+    }
+    #roomName {
+      background: #2D9F0B;
+      color:#FFF;
+      width: 100%;
+      height: 20px;
+      position:sticky;
+      margin-bottom: 20px;
+
+    }
+ 
+   
+  
 
 </style>
 
 <div id="chatDiv">
+<div id="roomName">
+<p ></p>
+</div>
     <ul id="messages"></ul>
    
     <form id="form" action="" > 
@@ -64,7 +76,7 @@ customElements.define('chat-box',
    */
   class extends HTMLElement {
 #roomName
-#socket
+
 
 
 /**
@@ -92,26 +104,23 @@ async connectedCallback () {
 
 
 
-
-// exit () {
-//  // this.#socket.close()
-//   this.remove()
-// }
-
-
 async contact (action) {
+ 
    var socket = io("ws://localhost:3000");
   let user =JSON.parse (sessionStorage.getItem('user'))
   console.log(action)
+  console.log(user.profileImg,'ååå')
   socket.emit(`${action}`,`${this.#roomName}`,user);
   socket.on('create', (room,user )=> {
-console.log(room,'ölölöl')
+
 this.#roomName =room
+console.log(user.profileImg,'ååå')
+this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
 sessionStorage.setItem('user', JSON.stringify(user))
 
    });
 socket.on('join', (user )=>{
-  
+  this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
 
   sessionStorage.setItem('user',JSON.stringify(user))
     })
@@ -180,8 +189,9 @@ setTimeout(()=>
 } ,1000)
 
  });
-
-
+ socket.on('connect_failed', function() {
+  console.log("Sorry, there seems to be an issue with the connection!");
+})
 
   
 

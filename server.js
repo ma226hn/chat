@@ -5,7 +5,9 @@ import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
  const app = express()
  const httpServer = createServer(app)
- const io = new Server(httpServer)
+ const io = new Server(httpServer,{
+  maxHttpBufferSize: 3e8
+})
  const rooms= []
  const colors =[]
 function generateUniqueColor()
@@ -28,8 +30,8 @@ function generateUniqueColor()
     let finalRoomName= room+ rooms.length
       socket.join(finalRoomName); 
       user.Id = socket.id
-      user.color= 'rgb(236, 226, 226)'
-      colors.push('rgb(236, 226, 226)') 
+      user.color= 'black'
+      colors.push('black') 
       rooms.push(finalRoomName)
       console.log(finalRoomName)
 

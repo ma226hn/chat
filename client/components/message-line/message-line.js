@@ -5,17 +5,36 @@ template.innerHTML =
 
 <style>
 
-p#h {
-    color: red;
-    font-size: larger;
 
-
-}
 #messageLine {
   display: flex;
   flex-direction: row;
   gap: 60px;
 
+}
+#talkBubble {
+  width: auto;
+  min-width: 100px;
+  height: 80px;
+  background: rgb(236, 226, 226);
+  position: relative;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+#talkBubble:before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 26px;
+  width: 0;
+  height: 0;
+  border-top: 13px solid transparent;
+  border-right: 26px solid rgb(236, 226, 226);
+  border-bottom: 13px solid transparent;
+}
+p#messageText{
+  margin : 20px;
 }
 
 </style>
@@ -23,8 +42,8 @@ p#h {
 <div>
 <photo-icon/>
 </div>
-<div>
-<p id="h"></p>
+<div id="talkBubble">
+<p id="messageText"></p>
 </div>
 
 </div>
@@ -51,7 +70,7 @@ p#h {
  
    this.shadowRoot.querySelector('photo-icon').setAttribute('srcImg',this.getAttribute('userImg'))
    this.shadowRoot.querySelector('photo-icon').setAttribute('name',this.getAttribute('userName'))
-   this.shadowRoot.querySelector('#messageLine').style.backgroundColor= this.getAttribute('userColor')
+   this.shadowRoot.querySelector('#talkBubble').style.color= this.getAttribute('userColor')
   console.log(this.getAttribute('userColor'))
 
   }
