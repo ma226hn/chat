@@ -68,3 +68,11 @@ function checkAndInsertInputValue()
 }
 
 
+document.body.addEventListener('close', (e)=> {
+ 
+  console.log('eeee')
+  e.target.remove()
+  document.querySelector('#homePageDive').style. display ='block'
+  sessionStorage.setItem('user','')
+  document.body.style.backgroundImage = ' url(./img/backGrundImg.png)'
+})

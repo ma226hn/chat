@@ -53,7 +53,8 @@ function generateUniqueColor()
         currentUser=user
         
        
-        io.to(socket.id).emit('join',user);
+        io.to(socket.id).emit('info',user);
+        io.to(currentRoom).emit('join',user.name)
      
       });
    
@@ -66,11 +67,15 @@ function generateUniqueColor()
       io.to(currentRoom).emit('notifyUser', currentUser);
      
     });
-    io.on('disconnect' , ()=> {
-      io.to(currentRoom).emit('disconnect');
+   socket.on('closeChat' , ()=> {
+      console.log('server')
+      io.to(currentRoom).emit('closeChat',currentUser);
+     io.disconnectSockets(socket.id);
+    
      })
      
  })
+
 
   const directoryFullName = dirname(fileURLToPath(import.meta.url))
   app.use(express.static(join(directoryFullName, '.', 'client')))

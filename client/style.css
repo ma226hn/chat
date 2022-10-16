@@ -9,11 +9,16 @@ body
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
-    
+
+  
+
 }
+
 p#errorMessage{
    color : red;
-   background-color: #FFF;
+  
+  
+ 
 }
 div#homePageDive  {
  
