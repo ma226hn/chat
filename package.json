@@ -22,10 +22,11 @@
   },
   "homepage": "https://github.com/ma226hn/chat#readme",
   "dependencies": {
+    "@lnu/eslint-config": "^1.1.4",
+    "dec-enc-lib": "^2.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "http": "^0.0.1-security",
-    "@lnu/eslint-config": "^1.1.4",
     "nodeman": "^1.1.2",
     "path": "^0.12.7",
     "socket.io": "^4.5.2",

@@ -1,3 +1,6 @@
+import { Encrypt} from '../../dec-enc-lib/src/Encryption.js'
+import {Decrypt} from '../../dec-enc-lib/src/Decryption.js'
+
 
 const template = document.createElement('template')
 template.innerHTML =
@@ -109,12 +112,12 @@ async contact (action) {
    var socket = io("ws://localhost:3000");
   let user =JSON.parse (sessionStorage.getItem('user'))
   console.log(action)
-  console.log(user.profileImg,'ååå')
+  
   socket.emit(`${action}`,`${this.#roomName}`,user);
   socket.on('create', (room,user )=> {
 
 this.#roomName =room
-console.log(user.profileImg,'ååå')
+
 this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
 sessionStorage.setItem('user', JSON.stringify(user))
 
@@ -130,11 +133,15 @@ socket.on('join', (user )=>{
    this.shadowRoot.querySelector('#form').addEventListener('submit', (e)=>
   {
     e.preventDefault ()
-     var user = JSON.parse (sessionStorage.getItem('user'))
-    var message = messageInput.value 
-    socket.emit('chatMessage', user, message,this.#roomName);
+    if (messageInput.value !== '')
+    {
+     
+    let message = messageInput.value 
+    let encryptedMessage = Encrypt(message)
+    socket.emit('chatMessage', encryptedMessage);
    
     messageInput.value=''
+    messageInput.focus();}
   })
   socket.on('chatMessage', (from, msg) => {
    
@@ -144,8 +151,9 @@ socket.on('join', (user )=>{
     messageDiv.setAttribute('userName',from.name)
     messageDiv.setAttribute('userColor',from.color)
     messageDiv.setAttribute('userImg',from.profileImg)
+    let decryptedMessage = Decrypt(msg);
 
-    messageDiv.setAttribute('message',msg)
+    messageDiv.setAttribute('message',decryptedMessage)
     messageLine.appendChild(messageDiv)
 
   
@@ -159,7 +167,7 @@ socket.on('join', (user )=>{
 
 
 
- messageInput.focus();
+
 
 
 messageInput.addEventListener('keydown', ()=>
@@ -168,7 +176,7 @@ messageInput.addEventListener('keydown', ()=>
   console.log('key')
     let user =JSON.parse (sessionStorage.getItem('user'))
 
-socket.emit('notifyUser', user,this.#roomName)
+socket.emit('notifyUser')
 }
 )      
 
@@ -189,12 +197,12 @@ setTimeout(()=>
 } ,1000)
 
  });
- socket.on('connect_failed', function() {
-  console.log("Sorry, there seems to be an issue with the connection!");
+ socket.on('disconnect', function() {
+  this.shadowRoot.querySelector('#roomName').textContent = `Problem in connection`
 })
 
   
-
+ 
 }
   }
 
