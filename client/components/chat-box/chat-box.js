@@ -99,12 +99,10 @@ form #button {
 `
 customElements.define('chat-box',
 
-  /**
-   * Class.
-   */
+  
   class extends HTMLElement {
 #roomName
-
+#messageInput
  #socket = io("ws://localhost:3000");
 
 /**
@@ -115,18 +113,22 @@ constructor () {
 
   this.attachShadow({ mode: 'open' })
     .appendChild(template.content.cloneNode(true))
-    this.shadowRoot.querySelector('#close').addEventListener('click',()=>
-    {
-      
+  this.#messageInput = this.shadowRoot.querySelector('#messageInput')
+  this.shadowRoot.querySelector('#close').addEventListener('click',()=> {
       this.#socket.emit('closeChat');
       this.dispatchEvent(new CustomEvent('close', {  bubbles: true }))
-     
-     
 
-    }
+  })
 
-    )
+
+    this.#messageInput.addEventListener('keydown', ()=> {
+      this.#socket.emit('notifyUser')
+  }) 
  
+  this.shadowRoot.querySelector('#form').addEventListener('submit', (e)=> {
+  e.preventDefault ()
+   this.sendMessage()
+   })
 }
 /**
  * When component upload.
@@ -149,116 +151,93 @@ async contact (action) {
  
 
   let user =JSON.parse (sessionStorage.getItem('user'))
-  console.log(action)
-  
   this.#socket.emit(`${action}`,`${this.#roomName}`,user);
+
+
   this.#socket.on('create', (room,user )=> {
 
-this.#roomName =room
+    this.#roomName =room
 
-this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
-sessionStorage.setItem('user', JSON.stringify(user))
+    this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
+    sessionStorage.setItem('user', JSON.stringify(user))
 
-   });
-   this.#socket.on('info', (user )=>{
-  this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
-console.log(user)
-  sessionStorage.setItem('user',JSON.stringify(user))
-    })
-    this.#socket.on('join', (user )=>{
-    this.notify(`${user} has joined in chat`)
-        })
-    
- var messageInput = this.shadowRoot.querySelector('#messageInput')
+   })
 
-   this.shadowRoot.querySelector('#form').addEventListener('submit', (e)=>
-  {
-    e.preventDefault ()
-    if (messageInput.value !== '')
-    {
-     
-    let message = messageInput.value 
-    let encryptedMessage = Encrypt(message)
-    this.#socket.emit('chatMessage', encryptedMessage);
-   
-    messageInput.value=''
-    messageInput.focus();}
+
+  this.#socket.on('info', (user )=>{
+    this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
+    sessionStorage.setItem('user',JSON.stringify(user))
   })
+
+
+  this.#socket.on('join', (user )=>{
+    this.notify(`${user} has joined in chat`)
+  })
+    
+ 
   this.#socket.on('chatMessage', (from, msg) => {
-   let user = sessionStorage.getItem('user')
-    user= JSON.parse(user)
-    var messageLine = document.createElement('li')
-    const messageDiv = document.createElement('message-line')
-    messageDiv.setAttribute('userName',from.name)
-    messageDiv.setAttribute('userColor',from.color)
-    messageDiv.setAttribute('userImg',from.profileImg)
-    console.log(user.id,from.id)
-    if (user.id === from.id)
-    {
-      console.log('do')
-      messageDiv.setAttribute('flex','')}
-
-    let decryptedMessage = Decrypt(msg);
-
-    messageDiv.setAttribute('message',decryptedMessage)
-    messageLine.appendChild(messageDiv)
-
-  
-    
-    
-    this.shadowRoot.querySelector('#messages').append(messageLine);
-     });
-     
-    
+    this.receiveMessage(from,msg)
+  })
 
 
 
-
-
-
-
-messageInput.addEventListener('keydown', ()=>
-
-{
-  console.log('key')
-    
-
-    this.#socket.emit('notifyUser')
-}
-)      
-
-
-
-this.#socket.on('notifyUser',  (sendingUser)=> {
-   let thisUser =JSON.parse (sessionStorage.getItem('user'))
-   console.log(sendingUser.name)
-  if(thisUser.id != sendingUser.id) {
-    this.notify(`${sendingUser.name} is typing ...`)
-  }
+  this.#socket.on('notifyUser',  (sendingUser)=> {
+    let thisUser =JSON.parse (sessionStorage.getItem('user'))
+   if(thisUser.id != sendingUser.id) {
+     this.notify(`${sendingUser.name} is typing ...`)
+   }
  })
- this.#socket.on('closeChat', (user)=>  {
-  console.log(`${user.name} has left `)
-this.notify( `${user.name} has left `)
- 
 
-})
 
-  
+  this.#socket.on('closeChat', (user)=>  {
+ this.notify( `${user.name} has left `)
  
+ })
+
 }
+
   
-    notify (str) {
+notify (str) {
       
 this.shadowRoot.querySelector('#notifyUser').textContent = str
-
-
-setTimeout(()=>
-{
+setTimeout(()=> {
     this.shadowRoot.querySelector('#notifyUser').textContent = ''
 } ,1000)
+}
 
-   }
 
+
+
+
+sendMessage () {  
+    
+    if (this.#messageInput .value !== ''){
+    let message = this.#messageInput .value 
+    let encryptedMessage = Encrypt(message)
+    this.#socket.emit('chatMessage', encryptedMessage);
+    this.#messageInput .value=''
+    this.#messageInput .focus()
+    }
   }
+
+
+
+  receiveMessage(from,msg) {
+    let user = sessionStorage.getItem('user')
+     user= JSON.parse(user)
+     var messageLine = document.createElement('li')
+     const messageDiv = document.createElement('message-line')
+     messageDiv.setAttribute('userName',from.name)
+     messageDiv.setAttribute('userColor',from.color)
+     messageDiv.setAttribute('userImg',from.profileImg)
+     if (user.id === from.id) {
+       messageDiv.setAttribute('myMessage','')
+      }
+     let decryptedMessage = Decrypt(msg);
+     messageDiv.setAttribute('message',decryptedMessage)
+     messageLine.appendChild(messageDiv)
+     this.shadowRoot.querySelector('#messages').append(messageLine);
+  }
+}
 
 )
