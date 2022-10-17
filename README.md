@@ -30,7 +30,7 @@ npm run dev
 - The user should insert his name and  chose name for the room .
 - If the user do not insert (name , room's name ) error message appear 
 
- ![errorMessage](images/insertRoomName.PNG "error messsage")
+ ![errorMessage](images/insertRoomName.PNG "error message")
 
  - The chat interface appears and contains the final room name that the user sends to other users (via SMS, email or other methods)
 
@@ -43,4 +43,4 @@ npm run dev
    
    ## demo
    - demo video link
-  -  https://youtu.be/OgweQyGOe0Q
+  -  https://youtu.be/FYC1I_oRTY0
