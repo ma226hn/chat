@@ -8,16 +8,17 @@ export function Encrypt (message) {
   }
   message = message.replaceAll(' ', '//').split('')
   const messageCharsValue = countMessageCharsValue(message)
-  const hexValues = convertToHex(message) // convert to hex value
+  const hexValues = convertToHex(message) 
 
   let hexString = replaceHexValue(hexValues, replacementArrayCopy, messageCharsValue)
-  hexString += replacementArray[messageCharsValue % 175] // add the message value to the message
+  hexString += replacementArray[messageCharsValue % 175] 
   const encryptedMessage = mixMessage(hexString)
 
   return (encryptedMessage)
 }
 
- // count the sum of the chars(according to its number in unicode table) in the
+ 
+
 function countMessageCharsValue (message) {
   let sum = 0
   message.forEach(element => {
@@ -39,7 +40,7 @@ function convertToHex (message) {
 
 
 function replaceHexValue (hexArray, matrix, messageValue) {
-  messageValue = messageValue % 175 // shuffle matrix array according to the message char's   numbers in the unicode table.
+  messageValue = messageValue % 175
   const encryptedMessageArray = hexArray.map(str => {
     let NewValue = ''
     str = str.split('')

@@ -105,9 +105,7 @@ customElements.define('chat-box',
 #messageInput
  #socket = io("ws://localhost:3000");
 
-/**
- * Constructor for class .
- */
+
 constructor () {
   super()
 
