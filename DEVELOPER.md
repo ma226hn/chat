@@ -10,7 +10,7 @@
 ## Application advantages
 - Application using pure javascript , express,node and socket.io .
 - application can send just text message between  the participate in the same room 
--Application send notify when a new participate join in the room and when one let´ft and when one write .
+- Application send notify when a new participate join in the room and when one let´ft and when one write .
 - Application provide decryption and encryption .
 ## Application  development 
 - Sending an error message when the user wants to join a non-existent room instead of creating a new room

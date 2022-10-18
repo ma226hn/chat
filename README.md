@@ -1,10 +1,10 @@
 # Chat
-- Realtime (chat) app built with pure JavaScript, Node, express and socket.io
+- Realtime (chat) app built with HTML,pure JavaScript, Node, express and socket.io
 - The app uses a library (dec-enc-lib) that I Wrote for encryption and decryption
 ## Installing
 . download the project or clone it 
 ```shell
-git clone repository link
+git clone ....
 ```
 . Navigate to the project's root.
 ```shell
@@ -27,8 +27,8 @@ npm run dev
 ![mainSide](images/mainInterface.PNG "main interface")
 
 
-- The user should insert his name and  chose name for the room .
-- If the user do not insert (name , room's name ) error message appear 
+- The user should insert his name and room's name.
+- If the user did not insert (name , room's name ) error message appear 
 
  ![errorMessage](images/insertRoomName.PNG "error message")
 
