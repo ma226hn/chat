@@ -67,6 +67,7 @@ in my code I can say that i use both types ,but  in different way from the book 
 - customs elements (chat-box, message-line, photo-icon) are a kind of object structure and (oo) because we have data that we process through function and events
 
 ## Error Handling
+___
 - The programmer's job is to prevent the program from crashing.
 - When the programmer writes code, he must be sure that the program will not crash or give an incomprehensible error message.
 - Use error handling with( try --catch )and explicitly error's message help to avoid this.
@@ -98,16 +99,21 @@ ____
 
 
 ## Unit Test
+____
 - After reading the (unit test) in the book, I decided to modify all the tests I made in (dec-enc-lib) in the next version because it's not a clean test. You've thought wrongly about how important tests are. . "Test code is just as important as production code". 
 
 ## Classes
+______________________
 - according to the book the classes should be (small) and  (Single Responsibility principle)  and that what I did in (chat-box, message-line, photo-icon) classes .
 - Every class is responsible for one thing.
 - chat-box for mange connection between the client and server 
 - message-line display one message 
 - photo-icon show the user information 
-- modules like (Decryption.js, Encryption.js,PassEncDec.js) all these modules do one thing 
+- modules like (Decryption.js, Encryption.js,PassEncDec.js) all these modules do one thing
+
 ## System
+_______________
+
 -  the book explains how to separate the system and how to divide the responsibility between all classes .
  
 
