@@ -93,8 +93,21 @@ function checkAndInsertInputValue() {
 ____
  
  - using (dec-enc-lib) considered 3rd party code, but because I wrote   the library, so I didn't need to read about it or not be sure about the fit of using it
-    - Using socket.io is 3rd party code but it is known to us and we can read about it from the documentation and we can write a little code to test it so that we can define what this code does and what it can do 
+ 
+ - Using socket.io is 3rd party code but it is known to us and we can read about it from the documentation and we can write a little code to test it so that we can define what this code does and what it can do 
 
 
+## Unit Test
+- After reading the (unit test) in the book, I decided to modify all the tests I made in (dec-enc-lib) in the next version because it's not a clean test. You've thought wrongly about how important tests are. . "Test code is just as important as production code". 
 
+## Classes
+- according to the book the classes should be (small) and  (Single Responsibility principle)  and that what I did in (chat-box, message-line, photo-icon) classes .
+- Every class is responsible for one thing.
+- chat-box for mange connection between the client and server 
+- message-line display one message 
+- photo-icon show the user information 
+- modules like (Decryption.js, Encryption.js,PassEncDec.js) all these modules do one thing 
+## System
+-  the book explains how to separate the system and how to divide the responsibility between all classes .
+ 
 
