@@ -1,6 +1,8 @@
 # Chat
 - Realtime (chat) app built with HTML,pure JavaScript, Node, express and socket.io
 - The app uses a library (dec-enc-lib) that I Wrote for encryption and decryption
+- [README file to Dec-Enc-lib](./client/dec-enc-lib/README.md 'README file to Dec-Enc-lib')
+- [DEVELOPER file to Dec-Enc-lib](./client/dec-enc-lib/DEVElOPer.md ' DEVELOPER file to ')
 ## Installing
 . download the project or clone it 
 ```shell
