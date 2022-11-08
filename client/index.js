@@ -1,4 +1,5 @@
 import './components/chat-box/index.js'
+import './eventHandler.js'
 
 var profileImg =''
 var userName = ''

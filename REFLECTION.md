@@ -18,7 +18,7 @@ using the right names for the programmer and developer gives a common starting p
  - sendMessage (chat-box.js): sex lines 
  ### and there is some function are dyadic (receiveMessage(chat-box.js)
  - DecryptWithPass(passEncDec.js))
- ### I used object as  argument to reduce the number of the arguments
+ ### I used data structure as  argument to reduce the number of the arguments
 
  ```javascript
  
