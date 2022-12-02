@@ -3,18 +3,12 @@ const codingStr = 'å1äö-åä2p-åä3o-åä4i-åä5u-å7äy-åä8t-åär9-åä
 export const replacementArray = codingStr.split('-') // convert string to array to facilitate its use.
 
 
-
-
-
-
 export function shuffleArray (matrix, mValue) {
   let buffer = ''
   const shuffleCounter = mValue % 10
-
   for (let i = 0; i < shuffleCounter; i++) {
     buffer = matrix[matrix.length - 1]
     matrix.unshift(buffer)
-
     matrix.pop()
   }
 }

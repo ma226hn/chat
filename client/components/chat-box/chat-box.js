@@ -1,16 +1,13 @@
 import { Encrypt} from '../../dec-enc-lib/src/Encryption.js'
 import {Decrypt} from '../../dec-enc-lib/src/Decryption.js'
 import {template}from './htmlTemplate.js'
-import {setUserInfo} from '../../sessionWrapper.js'
-import {getUserInfo} from '../../sessionWrapper.js'
+import {setUserInfo,getUserInfo} from '../../sessionWrapper.js'
 
-customElements.define('chat-box',
 
-  
-  class extends HTMLElement {
+customElements.define('chat-box',   class extends HTMLElement {
 #roomName
 #messageInput
- #socket = io("ws://localhost:3000");
+#socket = io("ws://localhost:3000");
 
 
 constructor () {
@@ -33,11 +30,11 @@ constructor () {
   this.sendMessage()
    })
 }
+
 /**
  * When component upload.
  */
 async connectedCallback () {
-  
   
     this.shadowRoot.querySelector('#messageInput').focus()
     let action = this.getAttribute('action')
@@ -46,25 +43,17 @@ async connectedCallback () {
   }
 
 
-
 async contact (action) {
-  //let user =JSON.parse (sessionStorage.getItem('user'))
-  let user =JSON.parse (getUserInfo())
-
+  let user = getUserInfo()
   this.#socket.emit(`${action}`,`${this.#roomName}`,user);
   this.#socket.on('create', (room,user )=> {
     this.#roomName =room
     this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
-   // sessionStorage.setItem('user', JSON.stringify(user))
-     setUserInfo( JSON.stringify(user))
-
-   })
-
+     setUserInfo(user)
+  })
   this.#socket.on('info', (user )=>{
     this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
-   // sessionStorage.setItem('user',JSON.stringify(user))
-   setUserInfo(JSON.stringify(user))
-
+    setUserInfo(user)
   })
 
   this.#socket.on('join', (user )=>{
@@ -76,29 +65,26 @@ async contact (action) {
   })
 
   this.#socket.on('notifyUser',  (sendingUser)=> {
-   // let thisUser =JSON.parse (sessionStorage.getItem('user'))
-   let thisUser =JSON.parse (getUserInfo())
-
+   let thisUser = getUserInfo()
    if(thisUser.id != sendingUser.id) {
      this.notify(`${sendingUser.name} is typing ...`)
    }
  })
 
   this.#socket.on('closeChat', (user)=>  {
-   this.notify( `${user.name} has left `)
+    this.notify( `${user.name} has left `)
  })
 
 }
 
 notify (str) {
-this.shadowRoot.querySelector('#notifyUser').textContent = str
-setTimeout(()=> {
+  this.shadowRoot.querySelector('#notifyUser').textContent = str
+  setTimeout(()=> {
     this.shadowRoot.querySelector('#notifyUser').textContent = ''
-} ,1000)
+  } ,1000)
 }
 
 sendMessage () {  
-    
   if (this.#messageInput .value !== ''){
     let message = this.#messageInput .value 
     let encryptedMessage = Encrypt(message)
@@ -109,9 +95,7 @@ sendMessage () {
 }
 
 receiveMessage(from,msg) {
-  //let user = sessionStorage.getItem('user')
   let user = getUserInfo()
-  user= JSON.parse(user)
   var messageLine = document.createElement('li')
   const messageDiv = document.createElement('message-line')
   messageDiv.setAttribute('userName',from.name)

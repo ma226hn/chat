@@ -9,11 +9,9 @@ export function Encrypt (message) {
   message = message.replaceAll(' ', '//').split('')
   const messageCharsValue = countMessageCharsValue(message)
   const hexValues = convertToHex(message) 
-
   let hexString = replaceHexValue(hexValues, replacementArrayCopy, messageCharsValue)
   hexString += replacementArray[messageCharsValue % 175] 
   const encryptedMessage = mixMessage(hexString)
-
   return (encryptedMessage)
 }
 

@@ -6,15 +6,10 @@ export function EncryptWithPass (message, password) {
   if ((!message) || (!password) || (typeof message !== 'string') || (typeof password !== 'string')) {
     throw new TypeError('not valid argument')
   }
-
   const sumPassCharsValue = countStringValue(password.split(''))
-
   const divideCounter = (sumPassCharsValue % (password.length)) + 1
-
   const encryptedMessage = Encrypt(message)
-
   let encryptedMessageWithPass = ''
-
   let i = 0
   while (i < encryptedMessage.length) {
     encryptedMessageWithPass += encryptedMessage.slice(i, i + divideCounter)

@@ -6,25 +6,19 @@ import {template} from './htmlTemplate.js'
   constructor () { 
     super()
     this.attachShadow({ mode: 'open' })
-    .appendChild(template.content.cloneNode(true))
-     
+    .appendChild(template.content.cloneNode(true))     
   }
-
-
 
 
   connectedCallback() { 
 
-   this.shadowRoot.querySelector('p').textContent =  this.getAttribute('message') 
- 
-   this.shadowRoot.querySelector('photo-icon').setAttribute('srcImg',this.getAttribute('userImg'))
-   this.shadowRoot.querySelector('photo-icon').setAttribute('name',this.getAttribute('userName'))
-   this.shadowRoot.querySelector('#talkBubble').style.color= this.getAttribute('userColor')
-   if (this.hasAttribute('myMessage')) {
-   this.changeMessageDir()
-  
-  }
-   
+    this.shadowRoot.querySelector('p').textContent =  this.getAttribute('message') 
+    this.shadowRoot.querySelector('photo-icon').setAttribute('srcImg',this.getAttribute('userImg'))
+    this.shadowRoot.querySelector('photo-icon').setAttribute('name',this.getAttribute('userName'))
+    this.shadowRoot.querySelector('#talkBubble').style.color= this.getAttribute('userColor')
+    if (this.hasAttribute('myMessage')) {
+      this.changeMessageDir()
+    }
   }
 
 
@@ -37,4 +31,4 @@ changeMessageDir() {
 
 
 }
- customElements.define("message-line", PhotoIcon);
+customElements.define("message-line", PhotoIcon);

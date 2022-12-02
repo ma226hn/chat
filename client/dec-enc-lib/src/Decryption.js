@@ -52,7 +52,6 @@ function convertMessageToArrayOfString (message) {
 function findReplacementValue (message, mValue, matrix) {
   let index
   const valueArray = []
-
   message.forEach(member => {
     shuffleArray(matrix, mValue)
 
@@ -67,7 +66,8 @@ function findReplacementValue (message, mValue, matrix) {
 function findCharCorrespondingDecimalValue (message) {
   const decimalValueArray = convertHexStringToDecimalArray(message)
 
-  const charArray = decimalValueArray.map(element => { return String.fromCharCode(element) })
+  const charArray = decimalValueArray.map(element => {
+     return String.fromCharCode(element) })
 
   return charArray
 }

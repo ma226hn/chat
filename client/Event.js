@@ -1,4 +1,5 @@
 import { setUserInfo } from "./sessionWrapper.js"
+import {User } from "./User.js"
 export class Event {
     #profileImg
     #userName
@@ -32,6 +33,7 @@ export class Event {
         }
      }
 
+
    closeChatDialog(e)
     {
         e.target.remove()
@@ -39,15 +41,16 @@ export class Event {
         setUserInfo('')
         document.body.style.backgroundImage = ' url(./img/backGrundImg.png)'
     }
- showChatBox(actionName)  {
+
+
+   showChatBox(actionName)  {
     try{  
       this.checkAndInsertInputValue()
-      let  user = {
-         name :`${this.#userName}`,
-         profileImg : `${this.#profileImg}`
-       }
+      let user = new User();
+      user.setName(this.#userName)
+      user.setProfileImg(this.#profileImg)
      document.querySelector('#homePageDive').style. display ='none'
-     setUserInfo(JSON.stringify (user))
+     setUserInfo(user)
      const chat = document.createElement('chat-box')
      chat.setAttribute('action', actionName)
      chat.setAttribute('roomName',this.#roomName)

@@ -1,0 +1,37 @@
+export class User {
+    profileImg
+   name
+   
+  
+    constructor () {
+      this.img=''
+      this.name = ''
+   
+
+    }
+    setName(name)
+    {
+      if (name.length <2) {
+        throw ' the name should be long than two character'
+      } 
+      else {
+        const usernameRegex = /^[a-zA-Z]+$/
+        if (!(usernameRegex.test(name))) {
+          throw 'the name should not contain numbers or controls characters'
+        } else {
+          this.name= name
+        }
+     }
+   }
+    setProfileImg(img)
+    {
+      // if (img== '') {
+      //   console.log('********')
+      //   this.profileImg =` url(${(new URL(`./img/profileImg.jpg`, import.meta.url)).href} )`; 
+        
+      
+      // } else {
+        this.profileImg= img
+      //}
+    }
+}

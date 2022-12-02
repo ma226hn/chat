@@ -22,12 +22,9 @@ using the right names for the programmer and developer gives a common starting p
 
  ```javascript
  
-  let user =JSON.parse (sessionStorage.getItem('user'))
-  this.#socket.emit(`${action}`,`${this.#roomName}`,user);
-
-
-  this.#socket.on('create', (room,user )=> {
-
+   this.#socket.on('closeChat', (user)=>  {
+   this.notify( `${user.name} has left `)
+ })
 
 ```
 ### in (Decrypt()decryption.js) and ((Encrypt(Encryption.js)) I tried to avoid the side effects by modified on the copy of the (ReplacementArray)

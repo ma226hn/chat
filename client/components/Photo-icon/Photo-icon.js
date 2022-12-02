@@ -6,21 +6,18 @@ import {template} from './htmlTemplate.js'
   
   constructor () { 
     super()
-    this.attachShadow({ mode: 'open' })
-    .appendChild(template.content.cloneNode(true))
-     
+    this.attachShadow({ mode: 'open' }).appendChild(template.content.cloneNode(true)) 
   }
 
 
 
   connectedCallback() { 
 
-   this.shadowRoot.querySelector('p').textContent =  this.getAttribute('name') 
-   if (this.getAttribute('srcImg') !== ''){
+    this.shadowRoot.querySelector('p').textContent =  this.getAttribute('name') 
+    if (this.getAttribute('srcImg') !== ''){
     
-    this.shadowRoot.querySelector('div').style.backgroundImage = `url(${this.getAttribute('srcImg')}) `
-   }
-
+      this.shadowRoot.querySelector('div').style.backgroundImage = `url(${this.getAttribute('srcImg')}) `
+    }
   }
 
   static get observedAttributes() { 
@@ -29,4 +26,4 @@ import {template} from './htmlTemplate.js'
 
 
 }
- customElements.define("photo-icon", PhotoIcon);
+customElements.define("photo-icon", PhotoIcon);
