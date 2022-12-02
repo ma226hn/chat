@@ -3,16 +3,13 @@ import {Decrypt} from '../../dec-enc-lib/src/Decryption.js'
 import {template}from './htmlTemplate.js'
 import {setUserInfo,getUserInfo} from '../../sessionWrapper.js'
 
-
 customElements.define('chat-box',   class extends HTMLElement {
 #roomName
 #messageInput
 #socket = io("ws://localhost:3000");
 
-
 constructor () {
   super()
-
   this.attachShadow({ mode: 'open' })
     .appendChild(template.content.cloneNode(true))
   this.#messageInput = this.shadowRoot.querySelector('#messageInput')
@@ -20,11 +17,9 @@ constructor () {
       this.#socket.emit('closeChat');
       this.dispatchEvent(new CustomEvent('close', {  bubbles: true }))
   })
-
   this.#messageInput.addEventListener('keydown', ()=> {
       this.#socket.emit('notifyUser')
   }) 
- 
   this.shadowRoot.querySelector('#form').addEventListener('submit', (e)=> {
   e.preventDefault ()
   this.sendMessage()
@@ -35,7 +30,6 @@ constructor () {
  * When component upload.
  */
 async connectedCallback () {
-  
     this.shadowRoot.querySelector('#messageInput').focus()
     let action = this.getAttribute('action')
     this.#roomName = this.getAttribute('roomName')
@@ -55,26 +49,21 @@ async contact (action) {
     this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
     setUserInfo(user)
   })
-
   this.#socket.on('join', (user )=>{
     this.notify(`${user} has joined in chat`)
   })
- 
   this.#socket.on('chatMessage', (from, msg) => {
     this.receiveMessage(from,msg)
   })
-
   this.#socket.on('notifyUser',  (sendingUser)=> {
    let thisUser = getUserInfo()
    if(thisUser.id != sendingUser.id) {
      this.notify(`${sendingUser.name} is typing ...`)
    }
  })
-
   this.#socket.on('closeChat', (user)=>  {
     this.notify( `${user.name} has left `)
  })
-
 }
 
 notify (str) {

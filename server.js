@@ -15,13 +15,9 @@ app.use(express.static(join(directoryFullName, '.', 'client')))
  const rooms= []
  const colors =[]
 
-
-
  io.on('connection', (socket) => {
-  var currentUser
-  var currentRoom
-    
-    
+    var currentUser
+    var currentRoom
     socket.on('create', (room,user) => {
       console.log('creat')
     let finalRoomName= room+ rooms.length // To make sure the name is unique
@@ -29,37 +25,29 @@ app.use(express.static(join(directoryFullName, '.', 'client')))
       io.to(socket.id).emit('create',finalRoomName,user);
     });
 
-
-
     socket.on('join',(room,user) => {
       console.log('join')
       joinRoom(room,user)
         io.to(socket.id).emit('info',user);
         io.to(currentRoom).emit('join',user.name)
-     
       });
-   
-   
 
     socket.on('chatMessage', function( msg){
       console.log('chat')
       io.to(currentRoom).emit('chatMessage', currentUser, msg);
     });
 
-    
     socket.on('notifyUser', function(){
       console.log('notify')
       io.to(currentRoom).emit('notifyUser', currentUser);
     });
-
 
    socket.on('closeChat' , ()=> {
      io.to(currentRoom).emit('closeChat',currentUser);
      io.disconnectSockets(socket.id);
      })
 
-
-     function joinRoom (room,user){
+   function joinRoom (room,user){
       socket.join(room); 
       user.id = socket.id
       user.color= generateUniqueColor()
@@ -67,9 +55,7 @@ app.use(express.static(join(directoryFullName, '.', 'client')))
       rooms.push(room)
       currentUser= user
       currentRoom= room
-     
-     }
-     
+    }
  })
 
  function generateUniqueColor() { 
@@ -77,11 +63,8 @@ app.use(express.static(join(directoryFullName, '.', 'client')))
    do {
    color =` rgb(${Math.random()* 250},${Math.random()* 250}, ${Math.random()* 250}) `
    } while (colors.indexOf(color)!== -1)
- 
    return color
  }
-
-
 
   httpServer.listen(process.env.PORT, () => {
     console.log(`Server running at http://localhost:${process.env.PORT}`)

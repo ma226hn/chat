@@ -1,12 +1,11 @@
 export class User {
     profileImg
-   name   
-  
+    name   
     constructor () {
       this.img=''
       this.name = ''
-
     }
+
     setName(name)
     {
       if (name.length <2) {
@@ -21,9 +20,9 @@ export class User {
         }
      }
    }
+
     setProfileImg(img)
     {
       this.profileImg= img
-      
     }
 }

@@ -3,16 +3,12 @@
 import {template} from './htmlTemplate.js'
  class PhotoIcon extends HTMLElement {
 
-  
   constructor () { 
     super()
     this.attachShadow({ mode: 'open' }).appendChild(template.content.cloneNode(true)) 
   }
 
-
-
   connectedCallback() { 
-
     this.shadowRoot.querySelector('p').textContent =  this.getAttribute('name') 
     if (this.getAttribute('srcImg') !== ''){
     
@@ -23,7 +19,5 @@ import {template} from './htmlTemplate.js'
   static get observedAttributes() { 
     return ['pColor','srcImg','name'];
   }
-
-
 }
 customElements.define("photo-icon", PhotoIcon);
