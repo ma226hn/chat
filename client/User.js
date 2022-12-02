@@ -1,12 +1,10 @@
 export class User {
     profileImg
-   name
-   
+   name   
   
     constructor () {
       this.img=''
       this.name = ''
-   
 
     }
     setName(name)
@@ -25,13 +23,7 @@ export class User {
    }
     setProfileImg(img)
     {
-      // if (img== '') {
-      //   console.log('********')
-      //   this.profileImg =` url(${(new URL(`./img/profileImg.jpg`, import.meta.url)).href} )`; 
-        
+      this.profileImg= img
       
-      // } else {
-        this.profileImg= img
-      //}
     }
 }

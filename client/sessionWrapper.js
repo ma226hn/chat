@@ -7,6 +7,6 @@ export function getUserInfo()
  export  function setUserInfo(user)
 {
    let obj2 =  JSON.stringify (user)
-     sessionStorage.setItem('user', obj2)
+   sessionStorage.setItem('user', obj2)
     
 }
