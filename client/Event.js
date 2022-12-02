@@ -52,12 +52,11 @@ export class Event {
       chat.setAttribute('roomName',this.#roomName)
       document.body.appendChild(chat)
       document.body.style.backgroundImage = 'unset'
-   }
+    }
   catch (error){
      document.querySelector('#errorMessage').textContent = `${error}`
-   
-   }
-}
+    }
+ }
   
   checkAndInsertInputValue() {
     this.#userName = document.querySelector('#nameInput').value
@@ -69,5 +68,5 @@ export class Event {
     }
   }
    
-  }
+}
   
