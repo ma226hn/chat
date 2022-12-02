@@ -3,7 +3,7 @@ export class User {
     #name   
     constructor () {
       this.#profileImg=''
-      this.name = ''
+      this.#name = ''
     }
 
     setName(name)
@@ -25,7 +25,7 @@ export class User {
     {
       this.#profileImg= img
     }
-    
+
     getUserInfo()
     {
       return {name: this.#name, profileImg: this.#profileImg}
