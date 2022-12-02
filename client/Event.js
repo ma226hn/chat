@@ -46,7 +46,7 @@ export class Event {
       user.setName(this.#userName)
       user.setProfileImg(this.#profileImg)
       document.querySelector('#homePageDive').style. display ='none'
-      setUserInfo(user)
+      setUserInfo(user.getUserInfo())
       const chat = document.createElement('chat-box')
       chat.setAttribute('action', actionName)
       chat.setAttribute('roomName',this.#roomName)

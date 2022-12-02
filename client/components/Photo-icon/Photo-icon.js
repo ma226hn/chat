@@ -11,7 +11,6 @@ import {template} from './htmlTemplate.js'
   connectedCallback() { 
     this.shadowRoot.querySelector('p').textContent =  this.getAttribute('name') 
     if (this.getAttribute('srcImg') !== ''){
-    
       this.shadowRoot.querySelector('div').style.backgroundImage = `url(${this.getAttribute('srcImg')}) `
     }
   }

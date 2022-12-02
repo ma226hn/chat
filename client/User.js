@@ -1,8 +1,8 @@
 export class User {
-    profileImg
-    name   
+    #profileImg
+    #name   
     constructor () {
-      this.img=''
+      this.#profileImg=''
       this.name = ''
     }
 
@@ -16,13 +16,19 @@ export class User {
         if (!(usernameRegex.test(name))) {
           throw 'the name should not contain numbers or controls characters'
         } else {
-          this.name= name
+          this.#name= name
         }
      }
    }
 
     setProfileImg(img)
     {
-      this.profileImg= img
+      this.#profileImg= img
+    }
+    
+    getUserInfo()
+    {
+      return {name: this.#name, profileImg: this.#profileImg}
+      
     }
 }
