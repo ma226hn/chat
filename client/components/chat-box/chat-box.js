@@ -1,12 +1,12 @@
 import { Encrypt} from '../../dec-enc-lib/src/Encryption.js'
 import {Decrypt} from '../../dec-enc-lib/src/Decryption.js'
 import {template}from './htmlTemplate.js'
-import {setUserInfo,getUserInfo} from '../../sessionWrapper.js'
 
 customElements.define('chat-box',   class extends HTMLElement {
 #roomName
 #messageInput
 #socket = io("ws://localhost:3000");
+#currentUser
 
 constructor () {
   super()
@@ -38,16 +38,17 @@ async connectedCallback () {
 
 
 async contact (action) {
-  let user = getUserInfo()
+ let user = JSON.parse(this.getAttribute('currentUser'))
+ console.log(user,'ÄÄÄ')
   this.#socket.emit(`${action}`,`${this.#roomName}`,user);
   this.#socket.on('create', (room,user )=> {
     this.#roomName =room
     this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
-     setUserInfo(user)
+    this.#currentUser= user
   })
   this.#socket.on('info', (user )=>{
     this.shadowRoot.querySelector('#roomName').textContent = `Room Name ${this.#roomName}`
-    setUserInfo(user)
+    this.#currentUser= user
   })
   this.#socket.on('join', (user )=>{
     this.notify(`${user} has joined in chat`)
@@ -56,8 +57,7 @@ async contact (action) {
     this.receiveMessage(from,msg)
   })
   this.#socket.on('notifyUser',  (sendingUser)=> {
-   let thisUser = getUserInfo()
-   if(thisUser.id != sendingUser.id) {
+    if(this.#currentUser.id != sendingUser.id) {
      this.notify(`${sendingUser.name} is typing ...`)
    }
  })
@@ -84,13 +84,12 @@ sendMessage () {
 }
 
 receiveMessage(from,msg) {
-  let user = getUserInfo()
   var messageLine = document.createElement('li')
   const messageDiv = document.createElement('message-line')
   messageDiv.setAttribute('userName',from.name)
   messageDiv.setAttribute('userColor',from.color)
   messageDiv.setAttribute('userImg',from.profileImg)
-  if (user.id === from.id) {
+  if (this.#currentUser.id === from.id) {
      messageDiv.setAttribute('myMessage','')
   }
   let decryptedMessage = Decrypt(msg);

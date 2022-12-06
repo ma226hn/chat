@@ -19,26 +19,22 @@ app.use(express.static(join(directoryFullName, '.', 'client')))
     var currentUser
     var currentRoom
     socket.on('create', (room,user) => {
-      console.log('creat')
     let finalRoomName= room+ rooms.length // To make sure the name is unique
      joinRoom(finalRoomName,user)
       io.to(socket.id).emit('create',finalRoomName,user);
     });
 
     socket.on('join',(room,user) => {
-      console.log('join')
       joinRoom(room,user)
         io.to(socket.id).emit('info',user);
         io.to(currentRoom).emit('join',user.name)
       });
 
     socket.on('chatMessage', function( msg){
-      console.log('chat')
       io.to(currentRoom).emit('chatMessage', currentUser, msg);
     });
 
     socket.on('notifyUser', function(){
-      console.log('notify')
       io.to(currentRoom).emit('notifyUser', currentUser);
     });
 

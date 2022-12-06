@@ -1,4 +1,4 @@
-import { setUserInfo } from "./sessionWrapper.js"
+
 import {User } from "./User.js"
 export class Event {
   #profileImg
@@ -35,7 +35,6 @@ export class Event {
   closeChatDialog(e) {
     e.target.remove()
     document.querySelector('#homePageDive').style. display ='block'
-    setUserInfo('')
     document.body.style.backgroundImage = ' url(./img/backGrundImg.png)'
   }
 
@@ -46,10 +45,11 @@ export class Event {
       user.setName(this.#userName)
       user.setProfileImg(this.#profileImg)
       document.querySelector('#homePageDive').style. display ='none'
-      setUserInfo(user.getUserInfo())
       const chat = document.createElement('chat-box')
       chat.setAttribute('action', actionName)
       chat.setAttribute('roomName',this.#roomName)
+      let userAttribute = JSON.stringify (user.getUserInfo())
+      chat.setAttribute('currentUser',userAttribute)
       document.body.appendChild(chat)
       document.body.style.backgroundImage = 'unset'
     }
